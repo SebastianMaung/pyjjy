@@ -5,6 +5,23 @@ import struct
 import time
 from pyaudio import PyAudio as pa
 from pyaudio import paFloat32
+import socket
+plusminushours = 0 #idk
+def RequestTimefromNtp(addr='ntp.nict.jp'):
+    REF_TIME_1970 = 2208988800  # Reference time (Jan 1, 1900 to Jan 1, 1970)
+    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    data = b'\x1b' + 47 * b'\0'
+    client.sendto(data, (addr, 123))
+    data, address = client.recvfrom(1024)
+    if data:
+        t = struct.unpack('!12I', data)[10]
+        t -= REF_TIME_1970
+        # Convert to datetime object
+        dt = datetime.datetime.fromtimestamp(t) + datetime.timedelta(hours=plusminushours)
+        return dt
+
+print(RequestTimefromNtp())
+print(datetime.datetime.now())
 
 
 class JJYsignal:
@@ -66,7 +83,7 @@ class JJYsignal:
             rate=self.rate, frames_per_buffer=chunk, output=True
         )
         # Initial signal sequence update
-        self.update_seq(datetime.datetime.now())
+        self.update_seq(datetime.datetime(2025, 6, 24, 22, 31, 2))
 
     def _reset(self):
         """Reset timecode list to empty.
@@ -179,7 +196,7 @@ class JJYsignal:
             return self.playwin()
         while self.elaps <= self.duration:
             time.sleep(1e-5)
-            now = datetime.datetime.now()
+            now = RequestTimefromNtp()
             ms = now.microsecond // 1000.
             # if 0 ms comes, send a tone to the system.
             if not ms:
@@ -189,7 +206,7 @@ class JJYsignal:
         """Windows datetime resolution issue workaround.
         Time is measured using time.perf_counter.
         """
-        now = datetime.datetime.now()
+        now = RequestTimefromNtp()
         sec_strt = now.second + 1  # start from next second
         wait_for = 1 - now.microsecond*1e-6  # time to next second
 
@@ -224,7 +241,7 @@ class JJYsignal:
 
         # Update at every 0 second
         if sec == 0:
-            self.update_seq(datetime.datetime.now())
+            self.update_seq(RequestTimefromNtp())
 
 
 def main():

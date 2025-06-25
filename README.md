@@ -1,5 +1,5 @@
 # pyjjy
-Forked to add getting time from ntp.nict.jp instead of datetime using. [this](https://stackoverflow.com/questions/36500197/how-to-get-time-from-an-ntp-server)
+Forked to add getting time from ntp.nict.jp instead of datetime using [this](https://stackoverflow.com/questions/36500197/how-to-get-time-from-an-ntp-server).
 Tested working and accurate with my Seiko SQ767W.
 
 [これ](https://stackoverflow.com/questions/36500197/how-to-get-time-from-an-ntp-server)を使って、datetime ではなく ntp.nict.jp から時刻を取得するように設定しました。

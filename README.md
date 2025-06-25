@@ -1,5 +1,8 @@
 # pyjjy
-Forked to add getting time from ntp.nict.jp instead of datetime using [this]([url](https://stackoverflow.com/questions/36500197/how-to-get-time-from-an-ntp-server))
+Forked to add getting time from ntp.nict.jp instead of datetime using [this](https://stackoverflow.com/questions/36500197/how-to-get-time-from-an-ntp-server)
+Tested working and accurate with my Seiko SQ767W
+[これ](https://stackoverflow.com/questions/36500197/how-to-get-time-from-an-ntp-server)を使って、datetime ではなく ntp.nict.jp から時刻を取得するように設定しました。
+Seiko SQ767W でテストしたところ、正確でした。
 
 電波時計の時刻合わせに使用される標準電波JJYをPythonとPyAudioで再現するスクリプトです。
 shogo82148氏の[web-jjy](https://github.com/shogo82148/web-jjy)と同様に、一般的な機器で出力可能な13.333kHzを出力し、第3高調波がJJYおおたかどや山標準電波送信所の送信波周波数である40kHzとなることを利用しています。

@@ -83,7 +83,7 @@ class JJYsignal:
             rate=self.rate, frames_per_buffer=chunk, output=True
         )
         # Initial signal sequence update
-        self.update_seq(datetime.datetime(2025, 6, 24, 22, 31, 2))
+        self.update_seq(RequestTimefromNtp())
 
     def _reset(self):
         """Reset timecode list to empty.
